@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hon. Austine for Karura Ward MCA 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kenya-black: #000000;
+            --kenya-red: #CE1126;
+            --kenya-green: #006600;
+            --kenya-white: #FFFFFF;
+            --gold: #FFD700;
+            --dark-overlay: rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        /* Background Slideshow */
+        .background-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            filter: brightness(0.4);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Login Gate Overlay */
+        .gate-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(0,102,0,0.9));
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .gate-overlay.hidden {
+            display: none;
+        }
+
+        .gate-container {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--kenya-green);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: gatePulse 3s infinite;
+        }
+
+        @keyframes gatePulse {
+            0%, 100% { box-shadow: 0 20px 60px rgba(0,102,0,0.3); }
+            50% { box-shadow: 0 20px 80px rgba(206,17,38,0.4); }
+        }
+
+        .gate-header {
+            margin-bottom: 30px;
+        }
+
+        .gate-header h1 {
+            color: var(--gold);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .gate-header p {
+            color: var(--kenya-white);
+            font-size: 1.1em;
+        }
+
+        .kenya-flag {
+            font-size: 3em;
+            margin: 20px 0;
+            animation: wave 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .gate-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .gate-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .gate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .gate-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-login {
+            background: var(--kenya-green);
+            color: white;
+        }
+
+        .btn-login:hover {
+            background: #004d00;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,102,0,0.4);
+        }
+
+        .btn-signup {
+            background: var(--kenya-red);
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background: #a00d1f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(206,17,38,0.4);
+        }
+
+        .gate-form {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .gate-form.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--kenya-white);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        .iebc-logo-gate {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .iebc-logo-gate img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Main Content (Hidden until gate passed) */
+        .main-content {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-content.active {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--kenya-green);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-logo img {
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+        }
+
+        .nav-logo h2 {
+            color: var(--kenya-white);
+            font-size: 1.5em;
+        }
+
+        .nav-logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--kenya-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--kenya-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(206,17,38,0.9);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-badge img {
+            height: 30px;
+        }
+
+        .hero-badge span {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            color: var(--kenya-white);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .cta-primary {
+            background: var(--kenya-green);
+            color: white;
+            border: 2px solid var(--kenya-green);
+        }
+
+        .cta-primary:hover {
+            background: transparent;
+            color: var(--kenya-green);
+            transform: translateY(-3px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--kenya-white);
+        }
+
+        .cta-secondary:hover {
+            background: var(--kenya-white);
+            color: var(--kenya-black);
+            transform: translateY(-3px);
+        }
+
+        /* Floating Cards Section */
+        .agenda-section {
+            padding: 100px 50px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.9));
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5em;
+            color: var(--kenya-white);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gold);
+            font-size: 1.2em;
+        }
+
+        .floating-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .floating-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .floating-card:nth-child(2) { animation-delay: 0.5s; }
+        .floating-card:nth-child(3) { animation-delay: 1s; }
+        .floating-card:nth-child(4) { animation-delay: 1.5s; }
+        .floating-card:nth-child(5) { animation-delay: 2s; }
+        .floating-card:nth-child(6) { animation-delay: 2.5s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .floating-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .floating-card h3 {
+            color: var(--gold);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .floating-card p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        .card-accent {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(206,17,38,0.3) 50%);
+            border-radius: 0 20px 0 0;
+        }
+
+        /* Voter Education Section */
+        .education-section {
+            padding: 100px 50px;
+            background: rgba(0,102,0,0.2);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .education-content h2 {
+            font-size: 2.5em;
+            color: var(--kenya-white);
+            margin-bottom: 30px;
+        }
+
+        .education-content h2 span {
+            color: var(--kenya-red);
+        }
+
+        .education-list {
+            list-style: none;
+        }
+
+        .education-list li {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            border-left: 4px solid var(--kenya-green);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+
+        .education-list li:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(10px);
+        }
+
+        .education-list li::before {
+            content: '✓';
+            background: var(--kenya-green);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .education-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .education-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .iebc-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .iebc-badge img {
+            height: 40px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 50px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5em;
+            color: var(--kenya-white);
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .contact-item a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .contact-item a:hover {
+            color: var(--kenya-white);
+            text-decoration: underline;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--kenya-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-form h3 {
+            color: var(--gold);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+        }
+
+        .form-row input,
+        .form-row textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-row textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row input:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-row input::placeholder,
+        .form-row textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .send-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .send-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Replies Section */
+        .replies-section {
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .replies-section h4 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .reply-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--kenya-green);
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .reply-time {
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.6);
+            margin-top: 5px;
+        }
+
+        .reply-from {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.95);
+            padding: 40px 50px;
+            text-align: center;
+            border-top: 3px solid var(--kenya-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5em;
+            font-weight: 800;
+            color: rgba(255,255,255,0.03);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-size: 2em;
+            color: var(--kenya-white);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-logo span {
+            color: var(--kenya-red);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3em;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .social-links a:hover {
+            background: var(--kenya-green);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.6);
+            margin-top: 20px;
+        }
+
+        .footer-text .kenya-flag {
+            font-size: 1.5em;
+            animation: none;
+            margin: 0 5px;
+        }
+
+        /* User Profile Display */
+        .user-profile {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(0,102,0,0.9);
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 99;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-profile.active {
+            display: flex;
+        }
+
+        .logout-btn {
+            background: var(--kenya-red);
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #a00d1f;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5em; }
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .education-grid,
+            .contact-container { grid-template-columns: 1fr; }
+            .agenda-section,
+            .education-section,
+            .contact-section { padding: 60px 20px; }
+            .gate-buttons { flex-direction: column; }
+            .gate-btn { width: 100%; }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--kenya-green);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 1001;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading .spinner {
+            display: inline-block;
+        }
+
+        .loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Slideshow -->
+    <div class="background-slideshow">
+        <div class="slide active" style="background-image: url('https://kimi-web-img.moonshot.cn/img/d3i6fh83elv35t.cloudfront.net/32ad7a20bbc776e6ff67ffab6b4bf656fdc46343.jpg');"></div>
+        <div class="slide" style="background-image: url('https://kimi-web-img.moonshot.cn/img/english.news.cn/c0757eeda4379d84c16b164449e7c8693a912e4f.jpg');"></div>
+        <div class="slide" style="background-image: url('https://kimi-web-img.moonshot.cn/img/d34ad2g4hirisc.cloudfront.net/5727f09c92d40a2fbc7a4231f3cecc71b057cb26.jpg');"></div>
+        <div class="slide" style="background-image: url('https://kimi-web-img.moonshot.cn/img/static01.nyt.com/537c191ca3aa6939a2678021418f98924c48f8f5.jpg');"></div>
+        <div class="slide" style="background-image: url('https://kimi-web-img.moonshot.cn/img/s42831.pcdn.co/f827922e61a2b2b6a7340bad61d2d4fc7e1dfbc8.jpeg');"></div>
+    </div>
+
+    <!-- Login Gate -->
+    <div class="gate-overlay" id="gateOverlay">
+        <div class="gate-container">
+            <div class="iebc-logo-gate">
+                <img src="https://kimi-web-img.moonshot.cn/img/kenyaembassydc.org/cfd87a68f929e41fda55f68c8a0d7e8247036758.jpg" alt="IEBC Logo">
+            </div>
+            <div class="gate-header">
+                <div class="kenya-flag">🇰🇪</div>
+                <h1>Hon. Austine for Karura</h1>
+                <p>Member of County Assembly - Karura Ward 2026</p>
+                <p style="font-size: 0.9em; margin-top: 15px; color: var(--gold);">Your Vote, Your Future</p>
+            </div>
+            
+            <div class="gate-buttons" id="gateButtons">
+                <button class="gate-btn btn-login" onclick="showForm('login')" type="button">Login</button>
+                <button class="gate-btn btn-signup" onclick="showForm('signup')" type="button">Register to Vote</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="gate-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="submit-btn" id="loginSubmit">
+                    Access Website
+                    <span class="spinner"></span>
+                </button>
+                <p class="back-link" onclick="showForm('buttons')">← Back to Options</p>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="gate-form" id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" placeholder="e.g., +254796595995" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create password (min 6 chars)" minlength="6" required>
+                </div>
+                <button type="submit" class="submit-btn" id="signupSubmit">
+                    Register & Access
+                    <span class="spinner"></span>
+                </button>
+                <p class="back-link" onclick="showForm('buttons')">← Back to Options</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Profile -->
+    <div class="user-profile" id="userProfile">
+        <span>👤</span>
+        <span id="userNameDisplay">Welcome</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-logo">
+                <img src="https://kimi-web-img.moonshot.cn/img/kenyaembassydc.org/cfd87a68f929e41fda55f68c8a0d7e8247036758.jpg" alt="IEBC">
+                <div>
+                    <h2>Hon. Austine <span>🇰🇪</span></h2>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+                <li><a href="#agenda" onclick="scrollToSection('agenda')">Agenda</a></li>
+                <li><a href="#education" onclick="scrollToSection('education')">Voter Education</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <img src="https://kimi-web-img.moonshot.cn/img/kenyaembassydc.org/cfd87a68f929e41fda55f68c8a0d7e8247036758.jpg" alt="IEBC">
+                    <span>IEBC Certified Campaign</span>
+                </div>
+                <h1>Building a Better <span>Karura Ward</span></h1>
+                <p>Join Hon. Austine in the journey towards transparent leadership, community development, and democratic empowerment. Your vote is your voice!</p>
+                <div class="cta-buttons">
+                    <button class="cta-btn cta-primary" onclick="scrollToSection('contact')">
+                        <span>🤝</span> Join the Movement
+                    </button>
+                    <button class="cta-btn cta-secondary" onclick="showVoterInfo()">
+                        <span>ℹ️</span> Voter Information
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agenda Section -->
+        <section class="agenda-section" id="agenda">
+            <div class="section-title">
+                <h2>Our Agenda</h2>
+                <p>Key priorities for Karura Ward 2026</p>
+            </div>
+            <div class="floating-cards-container">
+                <div class="floating-card" onclick="showAgendaDetail('infrastructure')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">🏗️</div>
+                    <h3>Infrastructure</h3>
+                    <p>Road repairs, street lighting, and public facility upgrades to improve daily life for all residents.</p>
+                </div>
+                <div class="floating-card" onclick="showAgendaDetail('education')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">🎓</div>
+                    <h3>Education</h3>
+                    <p>Bursary programs, school infrastructure support, and youth skills development initiatives.</p>
+                </div>
+                <div class="floating-card" onclick="showAgendaDetail('health')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">🏥</div>
+                    <h3>Healthcare</h3>
+                    <p>Improved access to medical services, health camps, and support for local health centers.</p>
+                </div>
+                <div class="floating-card" onclick="showAgendaDetail('youth')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">💼</div>
+                    <h3>Youth Empowerment</h3>
+                    <p>Job creation, sports programs, and entrepreneurship support for young people in Karura.</p>
+                </div>
+                <div class="floating-card" onclick="showAgendaDetail('environment')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">🌳</div>
+                    <h3>Environment</h3>
+                    <p>Tree planting, clean-up campaigns, and sustainable waste management solutions.</p>
+                </div>
+                <div class="floating-card" onclick="showAgendaDetail('women')">
+                    <div class="card-accent"></div>
+                    <div class="card-icon">👩‍👧</div>
+                    <h3>Women Empowerment</h3>
+                    <p>Support for women-led businesses, safety initiatives, and equal opportunity programs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="education-section" id="education">
+            <div class="education-grid">
+                <div class="education-content">
+                    <h2>Why Your <span>Vote Matters</span></h2>
+                    <ul class="education-list">
+                        <li>Shape the future of Karura Ward through democratic participation</li>
+                        <li>Hold leaders accountable for their promises and actions</li>
+                        <li>Influence policy decisions affecting your community</li>
+                        <li>Exercise your constitutional right as a Kenyan citizen</li>
+                        <li>Support leaders who represent your values and interests</li>
+                    </ul>
+                </div>
+                <div class="education-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/english.news.cn/c0757eeda4379d84c16b164449e7c8693a912e4f.jpg" alt="Voter Education">
+                    <div class="iebc-badge">
+                        <img src="https://kimi-web-img.moonshot.cn/img/kenyaembassydc.org/cfd87a68f929e41fda55f68c8a0d7e8247036758.jpg" alt="IEBC">
+                        <span style="color: #333; font-weight: 600;">IEBC Official</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Contact Hon. Austine</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 0.9em;">Call or WhatsApp</p>
+                                <a href="tel:+254796595995" onclick="trackContact('phone')">+254 796 595995</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 0.9em;">Email Address</p>
+                                <a href="mailto:honaustine.karura2026@gmail.com" onclick="trackContact('email')">honaustine.karura2026@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 0.9em;">Campaign Office</p>
+                                <span>Karura Ward, Nairobi County, Kenya 🇰🇪</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 0.9em;">Office Hours</p>
+                                <span>Mon - Sat: 8:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <div class="form-row">
+                            <input type="text" id="contactName" placeholder="Your Full Name" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="email" id="contactEmail" placeholder="Your Email Address" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="tel" id="contactPhone" placeholder="Your Phone Number (optional)">
+                        </div>
+                        <div class="form-row">
+                            <textarea id="contactMessage" placeholder="Your message to Hon. Austine..." required></textarea>
+                        </div>
+                        <button type="submit" class="send-btn" id="sendBtn">
+                            Send Message
+                            <span class="spinner"></span>
+                        </button>
+                    </form>
+
+                    <div class="replies-section" id="repliesSection" style="display: none;">
+                        <h4>📨 Message History & Replies</h4>
+                        <div id="repliesList"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-watermark">HON. AUSTINE FOR KARURA 2026</div>
+            <div class="footer-content">
+                <div class="footer-logo">Hon. Austine <span>for Karura 2026</span></div>
+                <div class="social-links">
+                    <a onclick="openSocial('facebook')" title="Facebook">📘</a>
+                    <a onclick="openSocial('twitter')" title="Twitter">🐦</a>
+                    <a onclick="openSocial('whatsapp')" title="WhatsApp">💬</a>
+                    <a onclick="openSocial('youtube')" title="YouTube">📺</a>
+                </div>
+                <p class="footer-text">
+                    <span class="kenya-flag">🇰🇪</span> 
+                    Your Vote, Your Voice, Your Future 
+                    <span class="kenya-flag">🇰🇪</span>
+                </p>
+                <p style="color: rgba(255,255,255,0.4); font-size: 0.85em; margin-top: 15px;">
+                    Authorized by the Independent Electoral and Boundaries Commission (IEBC)
+                </p>
+                <p style="color: rgba(255,255,255,0.3); font-size: 0.8em; margin-top: 10px;">
+                    &copy; 2026 Hon. Austine Campaign. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastMessage">Operation successful</span>
+    </div>
+
+    <script>
+        // Store messages in memory
+        let messages = JSON.parse(localStorage.getItem('karuraMessages')) || [];
+        let currentUser = null;
+
+        // Initialize slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function initSlideshow() {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 10000);
+        }
+
+        // Show form function
+        function showForm(type) {
+            const buttons = document.getElementById('gateButtons');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+
+            if (type === 'buttons') {
+                buttons.style.display = 'flex';
+                loginForm.classList.remove('active');
+                signupForm.classList.remove('active');
+            } else if (type === 'login') {
+                buttons.style.display = 'none';
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+            } else if (type === 'signup') {
+                buttons.style.display = 'none';
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+        }
+
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('loginSubmit');
+            const email = document.getElementById('loginEmail').value;
+            
+            // Show loading
+            submitBtn.classList.add('loading');
+            
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                currentUser = { name: email.split('@')[0], email: email };
+                enterWebsite();
+            }, 1500);
+        }
+
+        // Handle Signup
+        function handleSignup(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('signupSubmit');
+            const name = document.getElementById('signupName').value;
+            
+            // Show loading
+            submitBtn.classList.add('loading');
+            
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                currentUser = { name: name, email: document.getElementById('signupEmail').value };
+                enterWebsite();
+                showToast('✓', 'Registration successful! Welcome to the campaign.');
+            }, 1500);
+        }
+
+        // Enter main website
+        function enterWebsite() {
+            const gate = document.getElementById('gateOverlay');
+            const main = document.getElementById('mainContent');
+            const profile = document.getElementById('userProfile');
+            
+            gate.classList.add('hidden');
+            main.classList.add('active');
+            profile.classList.add('active');
+            
+            if (currentUser) {
+                document.getElementById('userNameDisplay').textContent = `Welcome, ${currentUser.name}`;
+            }
+            
+            initSlideshow();
+            displayReplies();
+        }
+
+        // Logout function
+        function logout() {
+            const gate = document.getElementById('gateOverlay');
+            const main = document.getElementById('mainContent');
+            const profile = document.getElementById('userProfile');
+            
+            gate.classList.remove('hidden');
+            main.classList.remove('active');
+            profile.classList.remove('active');
+            currentUser = null;
+            
+            // Reset forms
+            document.getElementById('loginForm').reset();
+            document.getElementById('signupForm').reset();
+            showForm('buttons');
+        }
+
+        // Handle contact form submission
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const sendBtn = document.getElementById('sendBtn');
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const phone = document.getElementById('contactPhone').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            sendBtn.classList.add('loading');
+            
+            setTimeout(() => {
+                sendBtn.classList.remove('loading');
+                
+                const newMessage = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    message: message,
+                    date: new Date().toLocaleString(),
+                    replies: [{
+                        from: 'Hon. Austine Team',
+                        message: `Thank you ${name} for reaching out! We have received your message and will respond within 24 hours. Together for a better Karura! 🇰🇪`,
+                        date: new Date().toLocaleString()
+                    }]
+                };
+                
+                messages.push(newMessage);
+                localStorage.setItem('karuraMessages', JSON.stringify(messages));
+                
+                document.getElementById('contactForm').reset();
+                displayReplies();
+                showToast('✓', 'Message sent successfully!');
+            }, 1500);
+        }
+
+        // Display replies
+        function displayReplies() {
+            const section = document.getElementById('repliesSection');
+            const list = document.getElementById('repliesList');
+            
+            if (messages.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            section.style.display = 'block';
+            list.innerHTML = '';
+            
+            // Show last 5 messages
+            messages.slice(-5).reverse().forEach(msg => {
+                const item = document.createElement('div');
+                item.className = 'reply-item';
+                
+                let repliesHtml = '';
+                msg.replies.forEach(reply => {
+                    repliesHtml += `
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(0,102,0,0.3); border-radius: 5px;">
+                            <div class="reply-from">${reply.from}</div>
+                            <div>${reply.message}</div>
+                            <div class="reply-time">${reply.date}</div>
+                        </div>
+                    `;
+                });
+                
+                item.innerHTML = `
+                    <div style="font-weight: 600; color: var(--gold); margin-bottom: 5px;">${msg.name}</div>
+                    <div>${msg.message}</div>
+                    <div class="reply-time">${msg.date}</div>
+                    ${repliesHtml}
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Scroll to section
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Show agenda detail
+        function showAgendaDetail(type) {
+            const details = {
+                infrastructure: 'Our infrastructure plan includes tarmacking 15km of roads, installing 200 solar street lights, and renovating 5 public markets in Karura Ward.',
+                education: 'We will increase bursary allocations by 40%, build 3 new ECDE centers, and establish a youth skills training center.',
+                health: 'Plans include upgrading 2 dispensaries to health centers, monthly free medical camps, and health insurance support for 500 families.',
+                youth: 'Creating 1000 job opportunities through the Kazi Mtaani program, establishing 5 sports academies, and providing startup capital for 100 youth businesses.',
+                environment: 'Target to plant 10,000 trees annually, establish proper waste collection systems, and create 3 new green spaces.',
+                women: 'Launching a women\'s fund with KES 5M annual allocation, establishing safe spaces, and supporting 200 women entrepreneurs.'
+            };
+            
+            showToast('📋', details[type]);
+        }
+
+        // Show voter info
+        function showVoterInfo() {
+            const info = `To register as a voter in Kenya:
+1. Visit any IEBC registration center with your ID
+2. Registration is FREE of charge
+3. You must be 18+ years and a Kenyan citizen
+4. Bring proof of residence in Karura Ward
+5. Registration is ongoing - don't wait!`;
+            
+            alert(info);
+        }
+
+        // Track contact clicks
+        function trackContact(type) {
+            console.log(`User clicked ${type} contact`);
+        }
+
+        // Open social media
+        function openSocial(platform) {
+            const links = {
+                facebook: 'https://facebook.com/honaustinekarura',
+                twitter: 'https://twitter.com/honaustine2026',
+                whatsapp: 'https://wa.me/254796595995',
+                youtube: 'https://youtube.com/@honaustinekarura'
+            };
+            
+            showToast('🌐', `Opening ${platform}...`);
+            setTimeout(() => {
+                window.open(links[platform], '_blank');
+            }, 500);
+        }
+
+        // Toast notification
+        function showToast(icon, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastIcon').textContent = icon;
+            document.getElementById('toastMessage').textContent = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Check for existing session on load
+        window.addEventListener('load', () => {
+            // Uncomment below to auto-login for testing
+            // currentUser = { name: 'Test User', email: 'test@example.com' };
+            // enterWebsite();
+        });
+    </script>
+</body>
+</html>

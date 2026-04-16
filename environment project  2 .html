@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben & Sharon | Community Environmental Impact</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background Slideshow */
+        .bg-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+        }
+        
+        .bg-slideshow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+        }
+        
+        /* Glassmorphism Effects */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(31, 38, 135, 0.5);
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .glass-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #4ade80;
+            outline: none;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+        }
+        
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes float-delayed {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .float-anim-delayed {
+            animation: float-delayed 8s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+        
+        /* Gate Section */
+        #gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #gate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 50, 0, 0.7) 0%, rgba(0, 100, 0, 0.5) 100%);
+        }
+        
+        /* Logo Styling */
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(74, 222, 128, 0.5);
+            letter-spacing: -2px;
+        }
+        
+        .logo-sub {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        
+        /* Navigation */
+        .nav-glass {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Progress Bars */
+        .progress-fill {
+            transition: width 1s ease-out;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        /* Social Icons */
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: #4ade80;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(74, 222, 128, 0.6);
+            border-radius: 5px;
+        }
+        
+        /* Pulse Animation for Live Data */
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(74, 222, 128, 0); }
+        }
+        
+        .live-indicator {
+            animation: pulse-green 2s infinite;
+        }
+        
+        /* Welcome Message */
+        .welcome-banner {
+            position: fixed;
+            top: 100px;
+            right: -400px;
+            z-index: 999;
+            transition: right 0.5s ease;
+        }
+        
+        .welcome-banner.show {
+            right: 20px;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Background Slideshow -->
+    <div id="bgSlideshow" class="bg-slideshow"></div>
+
+    <!-- Gate / Login Section -->
+    <div id="gate">
+        <div class="glass p-12 rounded-3xl max-w-md w-full mx-4 float-anim text-center relative z-10">
+            <!-- Logo -->
+            <div class="mb-8">
+                <div class="logo">B & S</div>
+                <div class="logo-sub mt-2">Ben & Sharon</div>
+                <div class="text-green-300 text-sm mt-1">Environmental Collective</div>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-6 text-white">Join the Movement</h2>
+            
+            <!-- Tabs -->
+            <div class="flex mb-6 bg-black/20 rounded-full p-1">
+                <button onclick="switchTab('login')" id="tab-login" class="flex-1 py-2 rounded-full bg-green-500/30 text-white font-semibold transition-all">Login</button>
+                <button onclick="switchTab('signup')" id="tab-signup" class="flex-1 py-2 rounded-full text-white/70 font-semibold transition-all hover:text-white">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4" onsubmit="handleLogin(event)">
+                <input type="email" placeholder="Email Address" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                <input type="password" placeholder="Password" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-3 rounded-xl transition-all transform hover:scale-105 shadow-lg">
+                    Enter Platform
+                </button>
+            </form>
+            
+            <!-- Signup Form (Hidden by default) -->
+            <form id="signupForm" class="space-y-4 hidden" onsubmit="handleSignup(event)">
+                <input type="text" id="signupName" placeholder="Full Name" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                <input type="email" placeholder="Email Address" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                <input type="password" placeholder="Create Password" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-3 rounded-xl transition-all transform hover:scale-105 shadow-lg">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="mt-6 text-sm text-white/60">
+                <p>Track. Compete. Restore.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Message Banner -->
+    <div id="welcomeBanner" class="welcome-banner glass px-6 py-4 rounded-2xl flex items-center gap-4">
+        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-xl">
+            🌿
+        </div>
+        <div>
+            <p class="text-sm text-green-300">Welcome back,</p>
+            <p id="welcomeName" class="text-lg font-bold text-white">User</p>
+        </div>
+    </div>
+
+    <!-- Main Website Content (Hidden until login) -->
+    <div id="mainContent" class="hidden">
+        <!-- Navigation -->
+        <nav class="nav-glass fixed w-full top-0 z-50 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">B & S</span>
+                    <span class="text-white/80 text-sm hidden sm:block">Ben & Sharon</span>
+                </div>
+                <div class="hidden md:flex gap-8">
+                    <a href="#home" class="text-white hover:text-green-400 transition-colors font-semibold">Home</a>
+                    <a href="#about" class="text-white hover:text-green-400 transition-colors font-semibold">About Us</a>
+                    <a href="#services" class="text-white hover:text-green-400 transition-colors font-semibold">Services</a>
+                    <a href="#contact" class="text-white hover:text-green-400 transition-colors font-semibold">Contact Us</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div id="userDisplay" class="text-sm text-green-300"></div>
+                    <button onclick="logout()" class="text-white/70 hover:text-white text-sm">Logout</button>
+                    <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 space-y-3">
+                <a href="#home" class="block text-white py-2">Home</a>
+                <a href="#about" class="block text-white py-2">About Us</a>
+                <a href="#services" class="block text-white py-2">Services</a>
+                <a href="#contact" class="block text-white py-2">Contact Us</a>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="pt-24 pb-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- Hero Stats -->
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-400 bg-clip-text text-transparent">
+                        Collective Impact
+                    </h1>
+                    <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                        Real-time community environmental action tracking. Every action counts.
+                    </p>
+                    <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full border border-green-500/30">
+                        <div class="w-3 h-3 bg-green-400 rounded-full live-indicator"></div>
+                        <span class="text-green-300 text-sm font-semibold">LIVE DATA</span>
+                    </div>
+                </div>
+
+                <!-- Impact Cards Grid -->
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <!-- Trash Collection Card -->
+                    <div class="glass-card rounded-3xl p-8 float-anim">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-2xl">
+                                🗑️
+                            </div>
+                            <span class="text-blue-300 text-sm font-bold">THIS MONTH</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2" id="trashCount">2,450</h3>
+                        <p class="text-white/70 mb-4">Pounds of trash collected</p>
+                        <div class="w-full bg-black/20 rounded-full h-3 mb-2">
+                            <div id="trashProgress" class="progress-fill bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-sm text-blue-300">75% of monthly goal (3,000 lbs)</p>
+                    </div>
+
+                    <!-- Trees Planted Card -->
+                    <div class="glass-card rounded-3xl p-8 float-anim-delayed">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center text-2xl">
+                                🌳
+                            </div>
+                            <span class="text-green-300 text-sm font-bold">THIS MONTH</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2" id="treeCount">847</h3>
+                        <p class="text-white/70 mb-4">Trees planted</p>
+                        <div class="w-full bg-black/20 rounded-full h-3 mb-2">
+                            <div id="treeProgress" class="progress-fill bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full" style="width: 92%"></div>
+                        </div>
+                        <p class="text-sm text-green-300">92% of monthly goal (920 trees)</p>
+                    </div>
+
+                    <!-- Plastic Diverted Card -->
+                    <div class="glass-card rounded-3xl p-8 float-anim">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-2xl">
+                                ♻️
+                            </div>
+                            <span class="text-purple-300 text-sm font-bold">TOTAL IMPACT</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2">500<span class="text-lg">kg</span></h3>
+                        <p class="text-white/70 mb-4">Plastic diverted from river</p>
+                        <div class="w-full bg-black/20 rounded-full h-3 mb-2">
+                            <div class="progress-fill bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-sm text-purple-300">Goal exceeded! 🎉</p>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="glass rounded-3xl p-8 mb-12">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">📊</span>
+                        Community Impact Visualization
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                        <div>
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-green-500/10 rounded-xl border border-green-500/20">
+                        <p class="text-center text-lg">
+                            <span class="text-green-400 font-bold">Impact Translation:</span> 
+                            Your collective efforts have diverted <span class="font-bold text-white">500kg</span> of plastic from our local river, 
+                            equivalent to saving <span class="font-bold text-white">2,000</span> marine animals and cleaning 
+                            <span class="font-bold text-white">5km</span> of shoreline!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass rounded-3xl p-12">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-4xl font-bold mb-6 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+                                About Ben & Sharon
+                            </h2>
+                            <p class="text-lg text-white/80 mb-6 leading-relaxed">
+                                Founded in 2020, Ben & Sharon is a community-driven environmental platform that transforms 
+                                local conservation efforts into measurable, gamified impact. We believe that when communities 
+                                unite for nature, every small action creates ripples of lasting change.
+                            </p>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center p-4 bg-white/5 rounded-2xl">
+                                    <div class="text-3xl font-bold text-green-400">50K+</div>
+                                    <div class="text-sm text-white/60">Active Members</div>
+                                </div>
+                                <div class="text-center p-4 bg-white/5 rounded-2xl">
+                                    <div class="text-3xl font-bold text-emerald-400">120</div>
+                                    <div class="text-sm text-white/60">Communities</div>
+                                </div>
+                                <div class="text-center p-4 bg-white/5 rounded-2xl">
+                                    <div class="text-3xl font-bold text-teal-400">1M+</div>
+                                    <div class="text-sm text-white/60">Trees Planted</div>
+                                </div>
+                                <div class="text-center p-4 bg-white/5 rounded-2xl">
+                                    <div class="text-3xl font-bold text-cyan-400">500T</div>
+                                    <div class="text-sm text-white/60">Waste Collected</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="glass-card rounded-3xl p-6 float-anim">
+                                <div class="aspect-square rounded-2xl bg-gradient-to-br from-green-400/20 to-emerald-600/20 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="text-6xl mb-4">🌍</div>
+                                        <p class="text-lg font-semibold">Our Mission</p>
+                                        <p class="text-sm text-white/60 mt-2">Empowering communities to heal our planet, one local action at a time.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold mb-12 text-center">Our Conservation Services</h2>
+                
+                <!-- Environmental Services List -->
+                <div class="glass rounded-3xl p-8 mb-12">
+                    <h3 class="text-2xl font-bold mb-6 text-green-400">Available Services</h3>
+                    <ol class="space-y-4 list-decimal list-inside text-lg">
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">Community Cleanup Coordination</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Organize and track neighborhood cleanup events with real-time participant tracking</p>
+                        </li>
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">Tree Planting Initiatives</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Seasonal planting programs with species selection guidance and growth tracking</p>
+                        </li>
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">River & Waterway Protection</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Plastic diversion programs and water quality monitoring networks</p>
+                        </li>
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">Recycling Education & Hubs</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Local recycling centers with educational workshops and waste sorting training</p>
+                        </li>
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">Wildlife Habitat Restoration</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Native garden creation and urban wildlife corridor development</p>
+                        </li>
+                        <li class="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                            <span class="font-semibold text-white">Carbon Footprint Tracking</span>
+                            <p class="text-sm text-white/60 mt-1 ml-6">Personal and community carbon offset calculators with reduction challenges</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Environmental Challenges & Solutions -->
+                <h3 class="text-2xl font-bold mb-6 text-center">Environmental Challenges & Solutions</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="challengesContainer">
+                    <!-- Cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass rounded-3xl p-12">
+                    <h2 class="text-4xl font-bold mb-12 text-center">Contact Us</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Contact Info -->
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
+                                <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-white/60">Email</p>
+                                    <p class="text-lg font-semibold">contact@bensharon.eco</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
+                                <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400">
+                                    <i class="fas fa-phone text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-white/60">Phone</p>
+                                    <p class="text-lg font-semibold">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
+                                <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400">
+                                    <i class="fas fa-map-marker-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-white/60">Address</p>
+                                    <p class="text-lg font-semibold">123 Green Way, Eco City, EC 12345</p>
+                                </div>
+                            </div>
+
+                            <!-- Google Calendar Integration -->
+                            <div class="mt-8 p-6 bg-white/5 rounded-2xl border border-green-500/20">
+                                <h4 class="font-bold mb-4 flex items-center gap-2">
+                                    <i class="fas fa-calendar-alt text-green-400"></i>
+                                    Community Events Calendar
+                                </h4>
+                                <a href="https://calendar.google.com/calendar/u/0?cid=example" target="_blank" 
+                                   class="inline-flex items-center gap-2 px-6 py-3 bg-white text-green-700 rounded-xl font-semibold hover:bg-green-50 transition-colors">
+                                    <i class="fab fa-google"></i>
+                                    Add to Google Calendar
+                                </a>
+                                <p class="text-sm text-white/60 mt-3">Subscribe to stay updated on local cleanup events and planting days!</p>
+                            </div>
+                        </div>
+
+                        <!-- Contact Form with Auto-Reply -->
+                        <form onsubmit="handleContact(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 text-white/80">Your Name</label>
+                                <input type="text" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 text-white/80">Email Address</label>
+                                <input type="email" class="glass-input w-full px-4 py-3 rounded-xl" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 text-white/80">Message</label>
+                                <textarea rows="4" class="glass-input w-full px-4 py-3 rounded-xl resize-none" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg">
+                                Send Message
+                            </button>
+                            <p class="text-xs text-white/50 text-center">Auto-reply: You'll receive a confirmation within 24 hours</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-12 py-8 px-6 border-t border-white/10 bg-black/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="text-center md:text-left">
+                        <div class="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent mb-2">
+                            Ben & Sharon Company
+                        </div>
+                        <p class="text-white/60 text-sm">© 2024 All Rights Reserved. Healing Earth Together.</p>
+                    </div>
+                    
+                    <!-- Social Media Integration -->
+                    <div class="flex gap-6">
+                        <a href="#" class="social-icon text-2xl text-white/70 hover:text-green-400">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-icon text-2xl text-white/70 hover:text-green-400">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon text-2xl text-white/70 hover:text-green-400">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon text-2xl text-white/70 hover:text-green-400">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-icon text-2xl text-white/70 hover:text-green-400">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Data Collection Notice -->
+                <div class="mt-6 pt-6 border-t border-white/10 text-center text-xs text-white/40">
+                    <p>Data collected through Supabase integration | Real-time environmental tracking since 2024</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Background Images Array (Environmental Images)
+        const bgImages = [
+            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920', // Forest
+            'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920', // Green nature
+            'https://images.unsplash.com/photo-1518173946687-a4c036bc8bca?w=1920', // River
+            'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920', // Mountains
+            'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1920', // Trees
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920'  // Mountains green
+        ];
+        
+        let currentBg = 0;
+        const bgElement = document.getElementById('bgSlideshow');
+        
+        // Initialize background
+        bgElement.style.backgroundImage = `url(${bgImages[0]})`;
+        
+        // Change background every 10 seconds
+        setInterval(() => {
+            currentBg = (currentBg + 1) % bgImages.length;
+            bgElement.style.backgroundImage = `url(${bgImages[currentBg]})`;
+        }, 10000);
+
+        // Gate / Authentication Logic
+        let currentUser = null;
+        
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const loginTab = document.getElementById('tab-login');
+            const signupTab = document.getElementById('tab-signup');
+            
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTab.classList.add('bg-green-500/30');
+                loginTab.classList.remove('text-white/70');
+                signupTab.classList.remove('bg-green-500/30');
+                signupTab.classList.add('text-white/70');
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                signupTab.classList.add('bg-green-500/30');
+                signupTab.classList.remove('text-white/70');
+                loginTab.classList.remove('bg-green-500/30');
+                loginTab.classList.add('text-white/70');
+            }
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            // Simulate login - in production, this connects to Supabase Auth
+            const email = e.target.querySelector('input[type="email"]').value;
+            const username = email.split('@')[0];
+            enterPlatform(username);
+        }
+        
+        function handleSignup(e) {
+            e.preventDefault();
+            // Simulate signup - in production, this creates Supabase user
+            const name = document.getElementById('signupName').value;
+            enterPlatform(name);
+        }
+        
+        function enterPlatform(username) {
+            currentUser = username;
+            
+            // Hide gate with animation
+            const gate = document.getElementById('gate');
+            gate.style.opacity = '0';
+            gate.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                gate.style.display = 'none';
+                document.getElementById('mainContent').classList.remove('hidden');
+                
+                // Show welcome banner
+                document.getElementById('welcomeName').textContent = username;
+                document.getElementById('userDisplay').textContent = `Welcome, ${username}`;
+                const banner = document.getElementById('welcomeBanner');
+                banner.classList.add('show');
+                
+                // Hide banner after 5 seconds
+                setTimeout(() => {
+                    banner.classList.remove('show');
+                }, 5000);
+                
+                // Initialize charts and data
+                initCharts();
+                populateChallenges();
+                simulateRealtimeData();
+            }, 500);
+        }
+        
+        function logout() {
+            location.reload();
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Charts Initialization
+        function initCharts() {
+            // Impact Chart
+            const ctx1 = document.getElementById('impactChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Trash Collected', 'Trees Planted', 'Plastic Diverted', 'Carbon Offset'],
+                    datasets: [{
+                        data: [2450, 847, 500, 320],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(168, 85, 247, 0.8)',
+                            'rgba(20, 184, 166, 0.8)'
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: 'white', padding: 20 }
+                        }
+                    }
+                }
+            });
+            
+            // Monthly Chart
+            const ctx2 = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Community Actions',
+                        data: [120, 190, 300, 500, 800, 1200],
+                        borderColor: 'rgba(74, 222, 128, 1)',
+                        backgroundColor: 'rgba(74, 222, 128, 0.2)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'rgba(74, 222, 128, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Environmental Challenges Data (Simulated from Database)
+        const challengesData = [
+            {
+                challenge: "Plastic Pollution in Waterways",
+                solution: "Community river cleanup events + plastic diversion tracking",
+                icon: "🌊",
+                color: "from-blue-400 to-blue-600"
+            },
+            {
+                challenge: "Urban Heat Island Effect",
+                solution: "Strategic tree planting in concrete-heavy areas",
+                icon: "🌳",
+                color: "from-green-400 to-green-600"
+            },
+            {
+                challenge: "Waste Management Gaps",
+                solution: "Neighborhood recycling hubs + education programs",
+                icon: "♻️",
+                color: "from-emerald-400 to-emerald-600"
+            },
+            {
+                challenge: "Declining Bee Populations",
+                solution: "Native wildflower gardens + pesticide-free zones",
+                icon: "🐝",
+                color: "from-yellow-400 to-yellow-600"
+            },
+            {
+                challenge: "Air Quality Degradation",
+                solution: "Urban green corridors + car-free day initiatives",
+                icon: "💨",
+                color: "from-cyan-400 to-cyan-600"
+            },
+            {
+                challenge: "Soil Erosion",
+                solution: "Ground cover planting + community composting",
+                icon: "🌱",
+                color: "from-teal-400 to-teal-600"
+            }
+        ];
+        
+        function populateChallenges() {
+            const container = document.getElementById('challengesContainer');
+            challengesData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `glass-card rounded-2xl p-6 float-anim`;
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                            ${item.icon}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-2 text-white/90">Challenge:</h4>
+                            <p class="text-white/70 text-sm mb-3">${item.challenge}</p>
+                            <h4 class="font-bold text-lg mb-2 text-green-400">Solution:</h4>
+                            <p class="text-white/80 text-sm">${item.solution}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // Simulate Real-time Data Updates (Supabase Simulation)
+        function simulateRealtimeData() {
+            // Simulate live data changes
+            setInterval(() => {
+                // Randomly increment numbers to simulate live updates
+                const trashEl = document.getElementById('trashCount');
+                const treeEl = document.getElementById('treeCount');
+                
+                if (Math.random() > 0.7) {
+                    const currentTrash = parseInt(trashEl.textContent.replace(',', ''));
+                    const newTrash = currentTrash + Math.floor(Math.random() * 5);
+                    trashEl.textContent = newTrash.toLocaleString();
+                    
+                    // Update progress bar
+                    const trashPercent = Math.min((newTrash / 3000) * 100, 100);
+                    document.getElementById('trashProgress').style.width = `${trashPercent}%`;
+                }
+                
+                if (Math.random() > 0.8) {
+                    const currentTrees = parseInt(treeEl.textContent.replace(',', ''));
+                    const newTrees = currentTrees + Math.floor(Math.random() * 3);
+                    treeEl.textContent = newTrees.toLocaleString();
+                    
+                    const treePercent = Math.min((newTrees / 920) * 100, 100);
+                    document.getElementById('treeProgress').style.width = `${treePercent}%`;
+                }
+            }, 5000);
+        }
+        
+        // Contact Form Handler
+        function handleContact(e) {
+            e.preventDefault();
+            
+            // Simulate sending to Supabase
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.textContent = 'Message Sent! ✓';
+                btn.classList.add('bg-green-600');
+                
+                // Simulate auto-reply
+                setTimeout(() => {
+                    alert('Auto-Reply: Thank you for contacting Ben & Sharon! We have received your message and will respond within 24 hours. Together for a greener future! 🌿');
+                    e.target.reset();
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('bg-green-600');
+                }, 1000);
+            }, 1500);
+        }
+        
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
